@@ -1,21 +1,22 @@
-export default function initAnimacaoScroll() {
-  const sections = document.querySelectorAll('[data-anime="scroll"]');
-  if(sections.length) {
-    const windowMetade = window.innerHeight * 0.6;
-
-    function animaScroll() {
-      sections.forEach((section) => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const isSectionVisible = (sectionTop - windowMetade) < 0;
-        if(isSectionVisible)
-          section.classList.add('ativo');
-        else 
-          section.classList.remove('ativo');
-      })
+export default function initModal() {
+  const botaoAbrir = document.querySelector('[data-modal="abrir"]');
+  const botaoFechar = document.querySelector('[data-modal="fechar"]');
+  const containerModal = document.querySelector('[data-modal="container"]');
+  
+  if(botaoAbrir && botaoFechar && containerModal) {
+    
+    function toggleModal(event) {
+      event.preventDefault();
+      containerModal.classList.toggle('ativo');
     }
-
-    animaScroll();
-
-    window.addEventListener('scroll', animaScroll);
+    function cliqueForaModal(event) {
+      if(event.target === this) {
+        toggleModal(event);
+      }
+    }
+  
+    botaoAbrir.addEventListener('click', toggleModal);
+    botaoFechar.addEventListener('click', toggleModal);
+    containerModal.addEventListener('click', cliqueForaModal);
   }
 }
